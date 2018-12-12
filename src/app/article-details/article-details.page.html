@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content *ngIf="article">
-  <img [src]="article.urlToImage" style="max-height: 360px; width: 100%">
+  <img [src]="article.urlToImage" style="max-height: 360px; width: 100%" onError="this.src='../../assets/landscape_placeholder.png'">
   <ion-row padding>
     <ion-chip>
       <ion-icon name="md-create"></ion-icon>

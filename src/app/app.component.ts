@@ -35,6 +35,11 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.platform.backButton.subscribe(
+          () => {
+            console.log('back button clicked'); // todo figure out how to exit the app when on home screen and user presses back
+          }
+      );
     });
   }
 }

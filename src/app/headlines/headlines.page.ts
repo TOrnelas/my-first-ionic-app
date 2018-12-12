@@ -14,7 +14,7 @@ import { Storage } from '@ionic/storage'
 export class HeadlinesPage implements OnInit {
 
     articles: Article[];
-    country =  'us';
+    country =  'us'; // default country
     allCountries = countriesFile.countries;
 
     constructor(private newsService: NewsApiService,
@@ -24,20 +24,18 @@ export class HeadlinesPage implements OnInit {
     ngOnInit() {
         this.storage.get('country').then(
             (value) => {
-                this.country = value;
+                this.country = value || 'us';
                 this.getContent();
             });
     }
 
     onArticleClicked(article: Article) {
-        this.navCtrl.navigateRoot('/article-details/' + article.title);
+        this.navCtrl.navigateForward('/article-details/' + article.title);
     }
 
     onCountrySelected() {
         this.storage.set('country', this.country).then(
-            (val) => {
-                this.getContent();
-            });
+            (val) => { this.getContent(); });
     }
 
     getContent() {
