@@ -14,7 +14,8 @@ const routes: Routes = [
   {
     path: 'sources',
     loadChildren: './sources/sources.module#SourcesPageModule'
-  }
+  },
+  { path: 'article-details', loadChildren: './article-details/article-details.module#ArticleDetailsPageModule' }
 ];
 
 @NgModule({

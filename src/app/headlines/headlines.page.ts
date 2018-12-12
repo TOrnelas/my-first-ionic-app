@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {NewsApiService} from '../services/news-api-service';
-import {HeadlinesResponse} from '../models/headlines-response-model';
+import { Component, OnInit } from '@angular/core';
+import { NewsApiService } from '../services/news-api-service';
+import { HeadlinesResponse } from '../models/headlines-response-model';
+import { Article } from '../models/article-model';
+import * as countriesFile from '../other/countries';
 
 @Component({
   selector: 'app-home',
@@ -9,14 +11,33 @@ import {HeadlinesResponse} from '../models/headlines-response-model';
 })
 export class HeadlinesPage implements OnInit {
 
-  constructor(private newsService: NewsApiService) {}
+    articles: Article[];
+    country = 'us'; // todo save country on local storage
+    allCountries = countriesFile.countries;
 
-  ngOnInit() {
-    this.newsService.getHeadlines().subscribe(
-        (response: HeadlinesResponse) => {
-          console.log(response.articles);
-        },
-        (error) => console.log(error) // todo handle error properly
-    );
-  }
+    constructor(private newsService: NewsApiService) {}
+
+    ngOnInit() {
+        this.getContent();
+        console.log(this.allCountries.length);
+    }
+
+    onArticleClicked(article: Article) {
+        console.log(article);
+    }
+
+    onCountrySelected() {
+        this.getContent();
+    }
+
+    getContent() {
+
+        // todo when articles news list is empty, show empty label
+        // todo show progress bar while fetching data
+
+        this.newsService.getHeadlines(this.country).subscribe(
+            (response: HeadlinesResponse) => this.articles = response.articles,
+            (error) => console.log(error) // todo handle error properly
+        );
+    }
 }

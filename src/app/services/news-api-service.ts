@@ -10,10 +10,10 @@ export class NewsApiService {
 
     constructor(private httpClient: HttpClient) { }
 
-    public getHeadlines() {
+    public getHeadlines(forCountry: string) {
 
         const params = {
-            country: 'us',
+            country: forCountry,
             apiKey: this.API_KEY
         };
 
