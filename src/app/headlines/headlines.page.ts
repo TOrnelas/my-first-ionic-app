@@ -4,6 +4,7 @@ import { HeadlinesResponse } from '../models/headlines-response-model';
 import { Article } from '../models/article-model';
 import * as countriesFile from '../other/countries';
 import {NavController} from '@ionic/angular';
+import { Storage } from '@ionic/storage'
 
 @Component({
   selector: 'app-home',
@@ -13,32 +14,41 @@ import {NavController} from '@ionic/angular';
 export class HeadlinesPage implements OnInit {
 
     articles: Article[];
-    country = 'us'; // todo save country on local storage
+    country =  'us';
     allCountries = countriesFile.countries;
 
     constructor(private newsService: NewsApiService,
-                public navCtrl: NavController) {}
+                public navCtrl: NavController,
+                private storage: Storage) {}
 
     ngOnInit() {
-        this.getContent();
-        console.log(this.allCountries.length);
+        this.storage.get('country').then(
+            (value) => {
+                this.country = value;
+                this.getContent();
+            });
     }
 
     onArticleClicked(article: Article) {
-        this.navCtrl.navigateForward('/article-details', true);
+        this.navCtrl.navigateRoot('/article-details/' + article.title);
     }
 
     onCountrySelected() {
-        this.getContent();
+        this.storage.set('country', this.country).then(
+            (val) => {
+                this.getContent();
+            });
     }
 
     getContent() {
 
         // todo when articles news list is empty, show empty label
         // todo show progress bar while fetching data
-
         this.newsService.getHeadlines(this.country).subscribe(
-            (response: HeadlinesResponse) => this.articles = response.articles,
+            (response: HeadlinesResponse) => {
+                this.articles = response.articles;
+                this.newsService.addToCache(response.articles);
+            },
             (error) => console.log(error) // todo handle error properly
         );
     }

@@ -3,10 +3,27 @@
     <ion-buttons slot="start">
       <ion-back-button  defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>article-details</ion-title>
+    <ion-title *ngIf="article">{{ article.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content *ngIf="article">
+  <img [src]="article.urlToImage" style="max-height: 360px; width: 100%">
+  <ion-row padding>
+    <ion-chip>
+      <ion-icon name="md-create"></ion-icon>
+      <ion-label>{{ article.author }}</ion-label>
+    </ion-chip>
+
+    <ion-chip>
+      <ion-icon name="globe"></ion-icon>
+      <ion-label (click)="onUrlClicked(article.url)">{{ article.url }}</ion-label>
+    </ion-chip>
+
+    <h6 ion-text color="primary">{{ article.description }}</h6>
+    <hr>
+    <p ion-text color="primary">{{ article.content }}</p>
+
+  </ion-row>
 
 </ion-content>
