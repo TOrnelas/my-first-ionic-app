@@ -3,6 +3,7 @@ import { NewsApiService } from '../services/news-api-service';
 import { HeadlinesResponse } from '../models/headlines-response-model';
 import { Article } from '../models/article-model';
 import * as countriesFile from '../other/countries';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ export class HeadlinesPage implements OnInit {
     country = 'us'; // todo save country on local storage
     allCountries = countriesFile.countries;
 
-    constructor(private newsService: NewsApiService) {}
+    constructor(private newsService: NewsApiService,
+                public navCtrl: NavController) {}
 
     ngOnInit() {
         this.getContent();
@@ -23,7 +25,7 @@ export class HeadlinesPage implements OnInit {
     }
 
     onArticleClicked(article: Article) {
-        console.log(article);
+        this.navCtrl.navigateForward('/article-details', true);
     }
 
     onCountrySelected() {

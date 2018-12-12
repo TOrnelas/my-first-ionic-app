@@ -10,7 +10,6 @@
 </ion-header>
 <ion-content padding>
 
-  <!--todo image placeholder-->
   <ion-list no-lines>
     <ion-item>
       <ion-label>Country</ion-label>
@@ -19,7 +18,7 @@
       </ion-select>
     </ion-item>
     <ion-card *ngFor="let article of articles" (click)="onArticleClicked(article)">
-      <img [src]="article.urlToImage"/>
+        <img [src]="article.urlToImage" onError="this.src='../../assets/landscape_placeholder.png'"/>
       <ion-card-content>
         <ion-card-title>{{ article.title }}</ion-card-title>
         <p>{{ article.description }}</p>
