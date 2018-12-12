@@ -4,16 +4,16 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'headlines',
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
+    path: 'headlines',
+    loadChildren: './headlines/headlines.module#HeadlinesPageModule'
   },
   {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
+    path: 'sources',
+    loadChildren: './sources/sources.module#SourcesPageModule'
   }
 ];
 
