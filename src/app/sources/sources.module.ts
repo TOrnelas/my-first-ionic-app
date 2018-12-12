@@ -20,4 +20,4 @@ import { SourcesPage } from './sources.page';
   ],
   declarations: [SourcesPage]
 })
-export class SourcesPageModule {}
+export class SourcesPageModule { }
